@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Modality;
 use App\Models\Examination;
 use Illuminate\Http\Request;
@@ -23,12 +22,12 @@ class ExaminationController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'code' => 'required|unique:examinations,code',
+            'code' => 'required|unique:examinations',
         ]);
 
         $modality->examinations()->create($request->all());
 
-        return redirect()->route('modalities.examinations.index', $modality->id)->with('success', 'Examination created.');
+        return redirect()->route('modalities.examinations.index', $modality->id)->with('success', 'Pemeriksaan berjaya ditambah.');
     }
 
     public function edit(Examination $examination)
@@ -45,7 +44,7 @@ class ExaminationController extends Controller
 
         $examination->update($request->all());
 
-        return redirect()->route('modalities.examinations.index', $examination->modality_id)->with('success', 'Examination updated.');
+        return redirect()->route('modalities.examinations.index', $examination->modality_id)->with('success', 'Pemeriksaan dikemaskini.');
     }
 
     public function destroy(Examination $examination)
@@ -53,6 +52,6 @@ class ExaminationController extends Controller
         $modalityId = $examination->modality_id;
         $examination->delete();
 
-        return redirect()->route('modalities.examinations.index', $modalityId)->with('success', 'Examination deleted.');
+        return redirect()->route('modalities.examinations.index', $modalityId)->with('success', 'Pemeriksaan dipadam.');
     }
 }
