@@ -34,22 +34,5 @@ Route::put('examinations/{examination}', [ExaminationController::class, 'update'
 Route::delete('examinations/{examination}', [ExaminationController::class, 'destroy'])->name('examinations.destroy');
 });
 
-// 🧑‍⚕️ Pesakit – Semua role
-Route::middleware(['auth', 'role:admin|staff|radiographer|doctor'])->group(function () {
-Route::resource('pesakit', PesakitController::class)->except(['destroy']);
-});
-
-// 📅 Janji Temu – Admin & Staff
-Route::middleware(['auth', 'role:admin|staff'])->group(function () {
-Route::resource('appointments', AppointmentController::class)->except(['edit', 'update', 'show']);
-});
-
-// 🔄 API Slot Masa
-Route::middleware(['auth'])->get('/appointments/slots', function (Request $request) {
-return response()->json(SlotHelper::getAvailableSlots($request->modality_id, $request->date));
-});
-
-// Test Route Role
-Route::get('/test-role', function () {
-    return 'Hello Admin!';
-})->middleware(['auth', 'role:admin']);
+// Pesakit (Contoh awal)
+Route::resource('pesakit', PesakitController::class)->middleware('auth');
